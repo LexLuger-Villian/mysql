@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Python MySQL CRUD</title>
+    <link href="https://jsdelivr.net" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Python MySQL CRUD Interface</h2>
+
+    <!-- Flash System Alert Prompts -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, msg in messages %}
+                <div class="alert alert-{{ category }}">{{ msg }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="row">
+        <!-- CREATE: Form Processing Window -->
+        <div class="col-md-4">
+            <div class="card card-body shadow-sm">
+                <h5>Add New User</h5>
+                <form action="/" method="POST">
+                    <div class="mb-3">
+                        <label>Full Name</label>
+                        <input type="text" name="name" class="form-control" required autocomplete="off">
+                    </div>
+                    <div class="mb-3">
+                        <label>Email Address</label>
+                        <input type="email" name="email" class="form-control" required autocomplete="off">
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit">Save User</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- READ, UPDATE, DELETE: Data Grid Layout View -->
+        <div class="col-md-8">
+            <table class="table table-striped table-hover bg-white shadow-sm rounded">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td class="text-center">
+                            <a href="/update/{{ user.id }}" class="btn btn-sm btn-info text-white">Edit</a>
+                            <a href="/delete/{{ user.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Permanently delete record?')">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
